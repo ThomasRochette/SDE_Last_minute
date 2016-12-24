@@ -11,5 +11,3 @@ all : $(exec)
 clean:
 	rm -rf *.o
 
-cleanAll: clean
-	rm -rf programme
