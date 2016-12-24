@@ -1,3 +1,5 @@
+make
+gcc -Wall BDD.c -o bdd
 gnome-terminal -e ./bdd
 gnome-terminal -e ./affichage
 gnome-terminal -e ./agence
