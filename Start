@@ -1,0 +1,4 @@
+gnome-terminal -e ./bdd
+gnome-terminal -e ./affichage
+gnome-terminal -e ./agence
+gnome-terminal -e ./utilisateur
