@@ -1,13 +1,12 @@
 CC = gcc
 flag = -Wall
-fph = struct.h
+head = struct.h
 exec = utilisateur agence affichage
 
 
 all : $(exec)
 
-%: %.c $(fph)
+%: %.c $(head)
 	$(CC) $(flag) $< -o $@
 clean:
-	rm -rf *.o
-
+	rm -rf $(exec)
