@@ -1,7 +1,7 @@
 CC = gcc
 flag = -Wall
-head = struct.h
-exec = utilisateur agence affichage
+head = struct.h fonction.h ecrivain.h
+exec = utilisateur agence affichage tirage
 
 
 all : $(exec)

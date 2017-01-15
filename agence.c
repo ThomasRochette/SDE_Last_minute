@@ -1,13 +1,10 @@
 #include "struct.h"
-
-void stopAgn(){//Fonction d'arret
-	shmdt(pBDD);// Détachement de la mémoire partagée
-	msgctl(BAL, IPC_RMID, NULL);// Destruction de la boite au lettre
-	exit(0);// Fermeture du processus
-}
+#include "fonction.h"
 
 int main(){
-	signal(SIGINT, stopAgn);//Détournement du signal d'interuption
+	signal(SIGHUP, stopAgn);
+	signal(SIGQUIT, stopAgn);
+	signal(SIGINT, stopAgn);//Détournement des signaux d'interuption
 	MESSAGE requete;
 	int pid=getpid(), i, ok;
 
@@ -15,7 +12,7 @@ int main(){
 	printf("pid %d création BAL ok\n",pid);
 	if ((BDDVols=shmget(cle_BDDVols, 40*sizeof(char), 0666))==-1)exit(1);//Connexion à la mémoire partagée
 	pBDD=(MESSAGE*)shmat(BDDVols,0,0);//Attachement à la mémoire partagée
-	if((pBDD)==NULL)exit(1);
+	if((pBDD)==NULL)exit(1);//arrêt si échec
 
 	while(1){
 		msgrcv(BAL, &requete, sizeof(requete.destination)+sizeof(requete.places)+sizeof(requete.pid), 1, 0);//Lecture de la boite aux lettres
@@ -27,17 +24,14 @@ int main(){
 		ok=0;
 
 		semop(MUTEX,&down,1);
-		printf("mutex down");
 		for(i=0;i<TAILLE;i++){	
 			if((strcmp(pBDD[i].destination,requete.destination)==0) && (requete.places<=pBDD[i].places)){//Comparaison avec la BDD
 				pBDD[i].places=pBDD[i].places-requete.places;//Changement du nombre de places disponible si nécessaire
-				ok=1;			
-			}else{
-
+				ok=1;
+				break;			
 			}
 		}
 		semop(MUTEX,&up,1);
-		printf("mutex up");
 		if(ok==1){
 			kill(requete.pid, SIGUSR1);//Réponse si réservation ok
 		}else{

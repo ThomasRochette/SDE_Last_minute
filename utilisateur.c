@@ -1,26 +1,16 @@
 #include "struct.h"
-
-void YES(){
-	printf("Demande accordée\n");
-}
-
-void NO(){
-	printf("Demande refusée\n");
-}
-
-void stopUsr(){
-	printf("Fin d'utilisateur\n");
-	exit(0);
-}
+#include "fonction.h"
 
 int main(){
-	signal(SIGINT, stopUsr);
+	signal(SIGQUIT, stopUsr);
+	signal(SIGHUP, stopUsr);
+	signal(SIGINT, stopUsr);//Détournement des signaux d'interuption
 
 	MESSAGE requete;
 	int pid=getpid(), envoyer;
 	char temp[4];
 	requete.type=1;
-	signal(SIGUSR1, YES);
+	signal(SIGUSR1, YES);//Détournement des signaux de réponse
 	signal(SIGUSR2, NO);
 	if ((BAL=msgget(cle_BAL, 0666))==-1) exit(1);//Connexion à la boite aux lettres
 	while(1){

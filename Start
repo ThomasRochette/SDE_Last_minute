@@ -1,6 +1,6 @@
 make
-gcc -Wall BDD.c -o bdd
-gnome-terminal -e ./bdd
+gnome-terminal -e ./tirage
+sleep 2
 gnome-terminal -e ./affichage
 gnome-terminal -e ./agence
 gnome-terminal -e ./utilisateur
