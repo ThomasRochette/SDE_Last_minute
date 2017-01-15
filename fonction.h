@@ -18,10 +18,10 @@ void stopUsr(){
 }
 
 void stopTir() {
-	system("skill -2 affichage");// fermeture des autres processus
-	system("skill -2 utilisateur");
-	system("skill -2 ecrivain");
-	system("skill -2 agence");
+	system("pkill -2 affichage");// fermeture des autres processus
+	system("pkill -2 utilisateur");
+	system("pkill -2 ecrivain");
+	system("pkill -2 agence");
 
 	fclose(destFile);
 	close(descpipe[1]);
@@ -30,10 +30,10 @@ void stopTir() {
 }
 
 void stopAgn(){//Fonction d'arret d'agence
-	system("skill -2 affichage");// fermeture des autres processus
-	system("skill -2 utilisateur");
-	system("skill -2 ecrivain");
-	system("skill -2 tirage");
+	system("pkill -2 affichage");// fermeture des autres processus
+	system("pkill -2 utilisateur");
+	system("pkill -2 ecrivain");
+	system("pkill -2 tirage");
 
 	shmdt(pBDD);// Détachement de la mémoire partagée
 	msgctl(BAL, IPC_RMID, NULL);// Destruction de la boite au lettre
@@ -41,10 +41,10 @@ void stopAgn(){//Fonction d'arret d'agence
 }
 
 void stopAff(){//Fonction d'arret d'Affichage
-	system("skill -2 agence");// fermeture des autres processus
-	system("skill -2 utilisateur");
-	system("skill -2 ecrivain");
-	system("skill -2 tirage");
+	system("pkill -2 agence");// fermeture des autres processus
+	system("pkill -2 utilisateur");
+	system("pkill -2 ecrivain");
+	system("pkill -2 tirage");
 
 	shmdt(pBDD);//Détachement de la mémoire partagée
 
@@ -52,10 +52,10 @@ void stopAff(){//Fonction d'arret d'Affichage
 }
 
 void stopEcr(){
-	system("skill -2 agence");// fermeture des autres processus
-	system("skill -2 utilisateur");
-	system("skill -2 affichage");
-	system("skill -2 tirage");
+	system("pkill -2 agence");// fermeture des autres processus
+	system("pkill -2 utilisateur");
+	system("pkill -2 affichage");
+	system("pkill -2 tirage");
 
 	shmdt(pBDD);    // Détachement de la mémoire partagée
 	shmctl(BDDVols, IPC_RMID, NULL);  // Contrôle sur le segment de mémoire partagée : destruction du segment
